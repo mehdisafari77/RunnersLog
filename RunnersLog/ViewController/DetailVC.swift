@@ -127,7 +127,9 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
         dismiss(animated: true, completion: nil)
         
-        //TODO: - We need a way to refresh the TableViewm once Modal dismissed
+        NotificationCenter.default.post(name:
+            Notification.Name( "RefreshNotificationIdentifier"),
+            object: nil)
     }
     
     @IBAction func locationToggled(_ sender: Any) {

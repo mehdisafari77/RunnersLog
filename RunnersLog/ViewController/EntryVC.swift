@@ -20,14 +20,20 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         myTableView.delegate = self
         myTableView.dataSource = self
+        
+        // Notification Center
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData(notification:)), name: Notification.Name("RefreshNotificationIdentifier"), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+    }
+    
+    @objc func refreshData(notification: Notification) {
+        myTableView.reloadData()
     }
 
-// toDetailSegue
 
 
     //MARK: - Table View Data Source
