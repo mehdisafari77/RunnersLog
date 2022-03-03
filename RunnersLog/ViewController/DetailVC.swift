@@ -20,14 +20,24 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var saveButton: UIButton!
 
 
+    var entry: Entry?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        updateViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+    }
+    
+    func updateViews() {
+        guard let entry = entry else { return }
+        
+        distanceTextField.text = entry.distance
+        locationSwitch.isOn = entry.trackLocation
     }
 
 
@@ -99,5 +109,29 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         myMapView.setRegion(coordinateRegion, animated: true)
     }
     */
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        
+        guard let distance = distanceTextField.text, !distance.isEmpty else {
+            return
+        }
+        // check if an entry exists
+        if let entry = self.entry {
+            //update
+            EntryController.shared.updateEntry(entry: entry, trackLocation: locationSwitch.isOn, distance: distance)
+        } else {
+            //save
+            let newEntry = Entry(distance: distance, latitude: 3.9, longitude: 3.5, trackLocation: locationSwitch.isOn, date: Date())
+            
+            EntryController.shared.createEntry(entry: newEntry)
+        }
+        dismiss(animated: true, completion: nil)
+        
+        //TODO: - We need a way to refresh the TableViewm once Modal dismissed
+    }
+    
+    @IBAction func locationToggled(_ sender: Any) {
+    }
+    
 
 }

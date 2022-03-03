@@ -41,9 +41,10 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         let entry = EntryController.shared.fetchedEntries[indexPath.row]
+        
+        cell.entry = entry
 
-
-        return UITableViewCell()
+        return cell
     }
     
     // MARK: - Navigation
