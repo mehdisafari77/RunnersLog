@@ -22,10 +22,25 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     var entry: Entry?
     
+    private let locationManager = CLLocationManager()
+    private let metersPerHalfMile = 804.672
+    var currentLocation = "Current Location"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         updateViews()
+        
+        // Location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 10
+        
+        // Map
+        myMapView.delegate = self
+        myMapView.showsUserLocation = true
+        myMapView.userTrackingMode = .follow
+        myMapView.showsCompass = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,10 +54,11 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         distanceTextField.text = entry.distance
         locationSwitch.isOn = entry.trackLocation
     }
+    
+    
 
 
     //MARK: - Location
-    /*
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
 
@@ -108,7 +124,6 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         print(coordinateRegion)
         myMapView.setRegion(coordinateRegion, animated: true)
     }
-    */
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         
