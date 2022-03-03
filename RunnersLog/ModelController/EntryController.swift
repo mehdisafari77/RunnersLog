@@ -31,6 +31,8 @@ class EntryController {
         }
     }
     
+
+    
     func createEntry(entry: Entry) {
         CoreDataStack.saveContext()
     }
@@ -42,11 +44,23 @@ class EntryController {
         CoreDataStack.saveContext()
     }
 
-
+    func sortEntries(ascending: Bool) {
+        
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: ascending)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        do {
+            try CoreDataStack.managedObjectContext.fetch(fetchRequest)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
        func deleteEverything() {
 
-           // Specify a batch to delete with a fetch request
-           let fetchRequest: NSFetchRequest<NSFetchRequestResult>
+        // Specify a batch to delete with a fetch request
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult>
         fetchRequest = NSFetchRequest(entityName: "Entry")
 
         // Create a batch delete request for the
