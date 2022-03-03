@@ -55,15 +55,32 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         locationSwitch.isOn = entry.trackLocation
     }
     
+    func enableLocation() {
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
+        myMapView.showsUserLocation = true
+    }
     
-
+    func disableLocation() {
+        locationManager.stopUpdatingLocation()
+        locationManager.stopMonitoringSignificantLocationChanges()
+        myMapView.showsUserLocation = false
+    }
+    
+    func tracking(enabled: Bool) {
+        if enabled {
+            enableLocation()
+        } else {
+            disableLocation()
+        }
+    }
 
     //MARK: - Location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
 
             let userLocation: CLLocation = locations[0] as CLLocation
-            //  print(" 😝 \(userLocation.description) 😝")
+              print(" 😝 \(userLocation.description) 😝")
 
             let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
 
