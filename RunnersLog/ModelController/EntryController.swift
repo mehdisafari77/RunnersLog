@@ -19,6 +19,28 @@ class EntryController {
         
         return request
     }()
+    
+    var fetchedEntries: [Entry] {
+        
+        do {
+            return try CoreDataStack.managedObjectContext.fetch(self.fetchRequest)
+        } catch {
+            print("Error fetching entries: \(error.localizedDescription)")
+            
+            return []
+        }
+    }
+    
+    func createEntry(entry: Entry) {
+        CoreDataStack.saveContext()
+    }
+    
+    func updateEntry(entry: Entry, trackLocation: Bool, distance: String) {
+        entry.trackLocation = trackLocation
+        entry.distance = distance
+        
+        CoreDataStack.saveContext()
+    }
 
 
        func deleteEverything() {
