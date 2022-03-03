@@ -18,7 +18,8 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        myTableView.delegate = self
+        myTableView.dataSource = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -31,11 +32,15 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //MARK: - Table View Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return EntryController.shared.fetchedEntries.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        guard let cell = myTableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as? EntryCell else {
+            return UITableViewCell()
+        }
+        
+        let entry = EntryController.shared.fetchedEntries[indexPath.row]
 
 
         return UITableViewCell()

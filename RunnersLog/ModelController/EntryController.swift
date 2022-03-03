@@ -10,7 +10,7 @@ import CoreData
 class EntryController {
 
 
-    static let share = EntryController()
+    static let shared = EntryController()
     
     private lazy var fetchRequest: NSFetchRequest<Entry> = {
         let request = NSFetchRequest<Entry>(entityName: "Entry")
