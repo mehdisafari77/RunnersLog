@@ -58,7 +58,14 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-
+        guard let destinationVC = segue.destination as? DetailVC, let cell = sender as? EntryCell, let indexPath = self.myTableView.indexPath(for: cell)
+        else {
+            return
+        }
+        
+        let entry = EntryController.shared.fetchedEntries[indexPath.row]
+        
+        destinationVC.entry = entry
     }
 
 

@@ -29,6 +29,7 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         updateViews()
         
         // Location
@@ -45,6 +46,10 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let entry = entry {
+            tracking(enabled: entry.trackLocation)
+        }
 
     }
     
@@ -76,6 +81,25 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     //MARK: - Location
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            manager.requestAlwaysAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        case .denied:
+            break
+        case .restricted:
+            break
+        default:
+            break
+        }
+        
+        locationManager.startUpdatingLocation()
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
 
@@ -165,7 +189,6 @@ class DetailVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func locationToggled(_ sender: Any) {
+        tracking(enabled: locationSwitch.isOn)
     }
-    
-
 }
