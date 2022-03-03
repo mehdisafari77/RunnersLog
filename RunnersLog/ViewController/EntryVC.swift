@@ -15,6 +15,7 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var myTableView: UITableView!
 
+    var isAscending: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,15 +63,22 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 
     @IBAction func sortButtonTapped(_ sender: Any) {
-
-
+        
+        if isAscending == false {
+            EntryController.shared.sortEntries(ascending: isAscending)
+            isAscending = true
+        } else {
+            EntryController.shared.sortEntries(ascending: isAscending)
+            isAscending = false
+        }
+        myTableView.reloadData()
     }
     
 
     @IBAction func randomButtonTapped(_ sender: Any) {
 
-        
-
+        EntryController.shared.deleteEverything()
+        myTableView.reloadData()
     }
 
     @IBAction func addButtonTapped(_ sender: Any) {
