@@ -26,7 +26,7 @@ class EntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     }
 
-
+// toDetailSegue
 
 
     //MARK: - Table View Data Source

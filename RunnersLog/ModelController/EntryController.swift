@@ -10,7 +10,15 @@ import CoreData
 class EntryController {
 
 
-
+    static let share = EntryController()
+    
+    private lazy var fetchRequest: NSFetchRequest<Entry> = {
+        let request = NSFetchRequest<Entry>(entityName: "Entry")
+        
+        request.predicate = NSPredicate(value: true)
+        
+        return request
+    }()
 
 
        func deleteEverything() {
